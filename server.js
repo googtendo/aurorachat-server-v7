@@ -15,6 +15,7 @@ const tcpserver = require('./aurorachat/tcp')
 const goofytcp = require('./aurorachat/goofytcp')
 const wsserver = require('./aurorachat/websocket')
 const webstuff = require('./aurorachat/webstuff')
+const voice = require('./aurorachat/voice')
 
 const core = new Core(
     config.SERVER_NAME, config.MAX_ROOM_HISTORY, config.SERVER_RULES, 
@@ -25,6 +26,7 @@ tcpserver(core, config.TCP_PORT)
 goofytcp(core, config.GOOFY_TCP_PORT)
 wsserver(core, config.WS_PORT)
 webstuff(core, config.WEB_PORT, config.MAX_EMBED_BACKLOG)
+voice(core, config.VOICE_PORT)
 core.loadPlugins(config.PLUGINS, config.PLUGIN_CONFIG)
 
 Core.userSaveInterval(config.USER_SAVE_INTERVAL)

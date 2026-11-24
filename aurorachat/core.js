@@ -217,7 +217,9 @@ CoreServer.prototype.connect = function(ip, onsend, onkick) {
  */
 CoreServer.prototype.send = function(msg) {
     msg.timestamp = parseInt(Date.now() / 1000)
-    console.log(msg)
+    if (typeof msg !== 'string' || !msg.startsWith('voice|audio|')) {
+        console.log(msg)
+    }
 
     if(msg.room) {
         if(msg.room.startsWith('@')) {

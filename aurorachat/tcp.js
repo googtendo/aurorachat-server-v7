@@ -3,7 +3,7 @@ const v7 = require('./v7')
 const antivpn = require('./antivpn')
 
 /**
- * @param {import('./core')} core 
+ * @param {import('./core')} core
  * @param {Number} port
  */
 const TCPServer = function(core, port) {
@@ -27,9 +27,9 @@ const TCPServer = function(core, port) {
 
         antivpn(ip).then( isbad => {
             if(!isbad) return
-            client.disconnect()
-            socket.destroy()
-            core.banIP(ip)
+                client.disconnect()
+                socket.destroy()
+                core.banIP(ip)
         } )
 
         socket.on('close', err => {
@@ -46,15 +46,15 @@ const TCPServer = function(core, port) {
                         case 'history': {
                             const [rawsize] = args
                             let size = 0
-                            if(rawsize) 
+                            if(rawsize)
                                 size = parseInt(rawsize)
-                            if(size == NaN) size = 0
-                            if(size < 0) size = 0
+                                if(size == NaN) size = 0
+                                    if(size < 0) size = 0
 
-                            let msgs = client.getRoomHistory().map(msg => `msg|${v7.encodeV7(msg.author)}|${v7.encodeV7(msg.content)}|${msg.timestamp}|\n`).join('')
-                            if(size) msgs = msgs.slice(-size)
+                                        let msgs = client.getRoomHistory().map(msg => `msg|${v7.encodeV7(msg.author)}|${v7.encodeV7(msg.content)}|${msg.timestamp}|\n`).join('')
+                                        if(size) msgs = msgs.slice(-size)
 
-                            socket.write(msgs)
+                                            socket.write(msgs)
                         } break
 
                         default: {
