@@ -16,8 +16,8 @@ function init(core, config) {
         log(`Discord Bot Logged in as ${readyClient.user.tag}!`)
     })
 
-    function senddiscordmsg(author, content) {
-        channel.send(`<**${author}**> ${content}`)
+    function senddiscordmsg(author, content, platform) {
+        channel.send(`(${platform}) <**${author}**> ${content}`)
     }
 
     client.on(Events.MessageCreate, message => {
@@ -54,7 +54,7 @@ function init(core, config) {
     function onmessage(msg, _) {
         if(msg.author.endsWith('[DISCORD]')) return msg
         if(msg.room === config.room)
-            senddiscordmsg(msg.author, msg.content)
+            senddiscordmsg(msg.author, msg.content, msg.platform)
         return msg
     }
 

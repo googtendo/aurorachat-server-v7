@@ -25,6 +25,7 @@ const path = require('path')
 const CoreClient = function(server, ip, onsend, onkick) {
     this.server = server
     this.user = undefined
+    this.platform = undefined
     /**
      * @type {String | undefined}
      */
@@ -145,7 +146,8 @@ CoreClient.prototype.send = function(msg) {
     const mobj = this.server.pluginPassthrough({
         author: this.user.login,
         room: this.room,
-        content: msg
+        content: msg,
+        platform: this.platform
     }, this)
 
     if(!mobj) return
@@ -212,14 +214,18 @@ CoreServer.prototype.connect = function(ip, onsend, onkick) {
     return client
 }
 
+CoreClient.prototype.setPlatform = function(platform) {
+    if(!platform) return
+        if(platform.length > 10) return
+            if(!/^[a-zA-Z0-9_-]+$/.test(platform)) return
+
+            this.platform = platform
+}
 /**
  * @param {Message} msg 
  */
 CoreServer.prototype.send = function(msg) {
     msg.timestamp = parseInt(Date.now() / 1000)
-    if (typeof msg !== 'string' || !msg.startsWith('voice|audio|')) {
-        console.log(msg)
-    }
 
     if(msg.room) {
         if(msg.room.startsWith('@')) {

@@ -9,6 +9,9 @@ window.addEventListener('load', e => {
     const embed_endpoint = '/embeds'
 
     const socket = new WebSocket(`ws://${location.hostname}:7071/`)
+    socket.addEventListener('open', () => {
+        sendV7(['platform', 'web'])
+    })
     socket.addEventListener('message', e => {
         const msgs = e.data.trim().split('\n')
         for(const msg of msgs) {
@@ -114,7 +117,7 @@ window.addEventListener('load', e => {
         return text.replace(urlregex, '<a href="$1" target="_blank">$1</a>')
     }
 
-    function onMessage(author, msg, timestamp) {
+    function onMessage(author, msg, timestamp, platform) {
         const msgdiv = document.createElement('div')
         const authordiv = document.createElement('div')
         const sendtimespan = document.createElement('span')
@@ -125,7 +128,7 @@ window.addEventListener('load', e => {
         sendtimespan.classList.add('msg-time')
         contentdiv.classList.add('msg-content')
 
-        authordiv.innerText = author
+        authordiv.innerText = `[${platform}] ${author}`
         contentdiv.innerText = msg
         contentdiv.innerHTML = urlify(contentdiv.innerHTML)
 

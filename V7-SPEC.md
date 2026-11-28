@@ -22,6 +22,7 @@ arg: Optional arguments, each argument is terminated with a | (including the las
 - part| - Leaves current room
 - history|optionalsize| - Gets message history for current room. Optionally a size parameter can be given, sending the last n bytes.
 - msg|msg| - Sends message to current room
+- platform|platform| - Optionally selects a platform to display
 
 ## Server responses ##
 
